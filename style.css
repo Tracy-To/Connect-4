@@ -1,0 +1,37 @@
+body {
+  background-color: #38b6ff;
+  font-family: 'roboto', sans-serif;
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  font-size: 40px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+h2 {
+  font-size: 40px;
+  margin-bottom: 50px;
+}
+
+#container {
+  background-color: white;
+  height: 900px;
+  width: 1400px;
+}
+
+#board {
+  /* the traditional Connect 4 grad is 7 x 6, so we will keep the ratio and make it 700px x 600px */
+  height: 600px; 
+  width: 700px;
+
+  background-color: #38b6ff;
+  margin: auto;
+}
