@@ -1,9 +1,12 @@
-const playerRed = "Player Red"
-const playerYellow = "Player Yellow"
-const currentPlayer = "Current Player"
-
-
 document.addEventListener('DOMContentLoaded', () => {
+  // define player names
+  const playerRed = "Player Red"
+  const playerYellow = "Player Yellow"
+
+  // decide who goes first randomly
+  const players = ["Player 1", "Player 2"];
+  const startingPlayer = players[Math.floor(Math.random() * players.length)];
+
   // prepare the grid for the game board
   const boardGrid = document.getElementById('board')
 
@@ -23,7 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // allow tiles to be styled in CSS
       tile.className = 'tile'
-
     }
   }
 })
+
+
+
