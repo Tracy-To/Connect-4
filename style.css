@@ -1,37 +1,49 @@
 body {
-  background-color: #38b6ff;
   font-family: 'roboto', sans-serif;
   text-align: center;
 
+  /* for body --> use flexbox display */
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   margin: 0;
 }
 
 h1 {
-  font-size: 40px;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  font-size: 32px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 h2 {
-  font-size: 40px;
-  margin-bottom: 50px;
+  font-size: 32px;
+  margin-bottom: 40px;
 }
 
 #container {
-  background-color: white;
   height: 900px;
   width: 1400px;
 }
 
 #board {
-  /* the traditional Connect 4 grad is 7 x 6, so we will keep the ratio and make it 700px x 600px */
+  background-color: blue;
   height: 600px; 
   width: 700px;
-
-  background-color: #38b6ff;
   margin: auto;
+  padding: 10px;
+
+  /* for game grid --> use grid display  */
+  display: grid;
+  grid-template-rows: repeat(6, 1fr); /* make a grid with 6 rows, each taking an equal fraction of available height */
+  grid-template-columns: repeat(7, 1fr); /* make a grid with 7 columns, each taking an equal fraction of the available width */
+  gap: 5px;
+  place-items: center;
+}
+
+.tile {
+  background-color: white;
+  height: 90%;
+  width: 90%;
+  border-radius: 50%; /* make the tiles circular */
 }
