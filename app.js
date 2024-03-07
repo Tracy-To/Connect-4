@@ -14,7 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const playerTurnElement = document.getElementById('playerTurn')
   playerTurnElement.textContent = `${currentPlayer}'s Turn`
 
-  // allow players to take take turns
+  // change color of the the turn message based on the current player (used in *line 41*)
+  const updatePlayerColor = () => {
+    if (currentPlayer === playerRed) {
+      playerTurnElement.style.color = 'red'
+      console.log('red')
+    } else if (currentPlayer === playerYellow) {
+      playerTurnElement.style.color = 'yellow'
+      console.log('yellow')
+    }
+  }
+
+  // change the color for the first round
+  updatePlayerColor()
+
+  // allow players to take take turns (used in *line 144*)
   const switchPlayer = () => {
 
     if (currentPlayer === playerRed) {
@@ -25,14 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // update turn message on screen
     playerTurnElement.textContent = `${currentPlayer}'s Turn`
 
-    // change color of the the turn message based on the current player
-    if (currentPlayer === playerRed) {
-      playerTurnElement.style.color = 'red'
-    } else if (currentPlayer === playerYellow) {
-      playerTurnElement.style.color = 'yellow'
-    }
+    // change the color of the turn message
+    updatePlayerColor()
+
   }
-  switchPlayer()
 
 
 
@@ -61,9 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tile.className = 'tile'
 
       // allow each tile to be clicked and then process it
-      tile.addEventListener('click', () => {
-      processTileClick(row, col)
-      })
+      tile.addEventListener('click', () => processTileClick(row, col))
     }
   }
 
@@ -88,7 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     return board
   }
-  let board = createEmptyBoard()
+    // enable
+    let board = createEmptyBoard()
 
   // allow the board to visually update itself after each turn
   const updateBoard = () => {
@@ -100,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (board[row][col] === playerRed) {
           tile.style.backgroundColor = 'red'
         } else if (board[row][col] === playerYellow) {
-          tile.style.backgroundColor === 'yellow'
+          tile.style.backgroundColor = 'yellow'
         }
       }
     }
@@ -109,40 +118,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   ///--- PLAYER MOVE & GAME HANDLING ---///
-  const processTileClick = (row, col) => {
-    // check if the selected column is full
-    if (board[0][col] !== null) {
-      // if the column is full, do nothing
-      return
-    }
 
-    // find the lowest available row in the selected column
+  const processTileClick = (row, col) => {
+    // the bottom row is 0 and the top row is 6
     let lowestRow = 0
-    while (lowestRow < numRows && board[lowestRow][col] != null) {
+    // find the lowest available row in the selected column
+    while (lowestRow <= 6 && board[lowestRow][col] != null) {
       lowestRow++
     }
 
-    // updated the board based on the player's move
-    board[lowestRow][col] = currentPlayer
+    // check if there is a tile space(s) available in the column
+    if (lowestRow <= 6) {
+      // updated the board based on the player's move
+      board[lowestRow][col] = currentPlayer
+    } else {
+      // do nothing
+      return
+    }
 
-    /// make updateBoard() function
+    // add the player's move to the board
     updateBoard()
 
     // check for a winner
     if (checkForWinner()) {
-      playerTurnElement.textContent = `${currentPlayer} wins!`
+      playerTurnElement.textContent = `${currentPlayer} Wins!`
       // show "Play Again" button
       document.getElementById('button').style.display = 'block'
-    } else {
-      document.getElementById('button').style.display = 'none'
-    }
-
-    // check for a tie
-    if (checkForTie()) {
+    } else if (checkForTie()) {
       playerTurnElement.textContent = "It's a Tie!"
+      playerTurnElement.style.color = 'orange'
+      console.log('orange')
       document.getElementById('button').style.display = 'block'
     } else {
-      document.getElementById('button').style.display = 'none'
+      switchPlayer()
     }
 
   }
@@ -153,9 +161,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // check for a tie
   const checkForTie = () => {
-    for (let col = 0; col < numCols; col++) {
-      if (board[0][col] === null) {
-        return false
+    // go through all the rows and columns
+    for (let row = 0; row < numRows; row++) {
+      for (let col = 0; col < numCols; col++) {
+        // if any tiles are empty, then it's not a tie
+        if (board[row][col] === null) {
+          return false
+        }
       }
     }
     return true
@@ -163,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // check for a winner and how
   const checkForWinner = () => {
-      if (checkForHorizontalWin() || checkForVerticalWin() || checkForDiagonalWin()) {
+      if (checkForHorizontalWin() || checkForVerticalWin() || checkForDiagonalWinBLTR() || checkForDiagonalWinTLBR()) {
         return true
       }
     return false
@@ -196,9 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let row = 0; row < numRows - 2; row++) {
         if (
             checkTile(row, col) &&
-            checkTile(row, col + 1) &&
-            checkTile(row, col + 2) &&
-            checkTile(row, col + 3)
+            checkTile(row + 1, col) &&
+            checkTile(row + 2, col) &&
+            checkTile(row + 3, col)
           )
           return true 
         }
@@ -206,22 +218,29 @@ document.addEventListener('DOMContentLoaded', () => {
       return false
     }
 
-  // check for a diagonal win
-  const checkForDiagonalWin = () => {
-    for (let row = 0; row < numRows - 2; row++) {
+  // check for a diagonal win from bottom-left to top-right
+  const checkForDiagonalWinBLTR = () => {
+    for (let row = 0; row < numRows; row++) {
       for (let col = 0; col < numCols - 3; col++) {
         if (
-            // Check diagonal from bottom-left to top-right
+            // Check diagonal 
             checkTile(row, col) &&
             checkTile(row + 1, col + 1) &&
             checkTile(row + 2, col + 2) &&
             checkTile(row + 3, col + 3)
           ) 
           return true
-        } 
-            
+        }
+      }
+      return false
+    }
+    
+  // check for a diagonal win from top-left to bottom-right
+  const checkForDiagonalWinTLBR = () => {
+    for (let row = 3; row < numRows; row++) {
+      for (let col = 0; col < numCols - 3; col++) {
         if (
-            // Check diagonal from top-left to bottom-right
+            // Check diagonal 
             checkTile(row, col) &&
             checkTile(row - 1, col + 1) &&
             checkTile(row - 2, col + 2) &&
@@ -229,15 +248,40 @@ document.addEventListener('DOMContentLoaded', () => {
           ) 
           return true
         }
-        return false
       }
-
+      return false
+    }
+    
 
 
   ///--- RESETTING THE GAME ---///
+
+  // enable the button to be clicked to restart the game
+  const button = document.getElementById('button')
+  button.addEventListener('click', () => resetGame())
+
   const resetGame = () => {
 
+    // hide the "Play Again" button again
+    document.getElementById('button').style.display = 'none'
+
+    // clear the board (make all tiles white)
+    const allTiles = document.querySelectorAll('.tile')
+      for (const tile of allTiles) {
+        tile.style.background = 'white'
+      }
+
+    // decide who goes first randomly (again)
+    currentPlayer = players[Math.floor(Math.random() * players.length)]
+
+    // create a new board
+    board = createEmptyBoard()
+
+    // enable players to switch turns again
+    switchPlayer()
+
   }
+
 
 
 })
