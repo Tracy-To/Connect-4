@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  ///---PLAYER INFO---///
+  ///--- PLAYER INFO ---///
 
   // define player names
   const playerRed = "Player Red"
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  ///---GAME BOARD INFO---///
+  ///--- GAME BOARD INFO ---///
 
   // prepare the board grid
   const boardElement = document.getElementById('board')
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const numCols = 7
 
   // create the board grid using nested loops
-  for (let row = 0; row < numRows; row++) {
+  for (let row = numRows - 1; row >= 0; row--) {
     for (let col = 0; col < numCols; col++) {
       
       // create a div element for each tile in the board
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // add each tile to the board
       boardElement.appendChild(tile)
 
-      // give each tile a row and column indice/dataset
+      // give each tile a row and column index/dataset
       tile.dataset.row = row
       tile.dataset.col = col
 
@@ -62,8 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // allow each tile to be clicked and then process it
       tile.addEventListener('click', () => {
-        processTileClick(row, col)
-
+      processTileClick(row, col)
       })
     }
   }
@@ -91,9 +90,76 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   let board = createEmptyBoard()
 
+  // allow the board to visually update itself after each turn
+  const updateBoard = () => {
+    for (let row = 0; row < numRows; row++) {
+      for (let col = 0; col < numCols; col++) {
+        const tile = document.querySelector(`[data-row="${row}"][data-col="${col}"]`)
+
+        // update the tiles with the player colors (red or yellow)
+        if (board[row][col] === playerRed) {
+          tile.style.backgroundColor = 'red'
+        } else if (board[row][col] === playerYellow) {
+          tile.style.backgroundColor === 'yellow'
+        }
+      }
+    }
+  }
+
+
+
+  ///--- PLAYER MOVE & GAME HANDLING ---///
+  const processTileClick = (row, col) => {
+    // check if the selected column is full
+    if (board[0][col] !== null) {
+      // if the column is full, do nothing
+      return
+    }
+
+    // find the lowest available row in the selected column
+    let lowestRow = 0
+    while (lowestRow < numRows && board[lowestRow][col] != null) {
+      lowestRow++
+    }
+
+    // updated the board based on the player's move
+    board[lowestRow][col] = currentPlayer
+
+    /// make updateBoard() function
+    updateBoard()
+
+    // check for a winner
+    if (checkForWinner()) {
+      playerTurnElement.textContent = `${currentPlayer} wins!`
+      // show "Play Again" button
+      document.getElementById('button').style.display = 'block'
+    } else {
+      document.getElementById('button').style.display = 'none'
+    }
+
+    // check for a tie
+    if (checkForTie()) {
+      playerTurnElement.textContent = "It's a Tie!"
+      document.getElementById('button').style.display = 'block'
+    } else {
+      document.getElementById('button').style.display = 'none'
+    }
+
+  }
+
 
   
-  ///---WINNING PLAYER INFO---///
+  ///--- WINNING PLAYER (AND TIE) INFO ---///
+
+  // check for a tie
+  const checkForTie = () => {
+    for (let col = 0; col < numCols; col++) {
+      if (board[0][col] === null) {
+        return false
+      }
+    }
+    return true
+  }
 
   // check for a winner and how
   const checkForWinner = () => {
@@ -127,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // check for a vertical win
   const checkForVerticalWin = () => {
     for (let col = 0; col < numCols; col++) {
-      for (let row = 0; row < numRows - 3; row++) {
+      for (let row = 0; row < numRows - 2; row++) {
         if (
             checkTile(row, col) &&
             checkTile(row, col + 1) &&
@@ -142,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // check for a diagonal win
   const checkForDiagonalWin = () => {
-    for (let row = 0; row < numRows - 3; row++) {
+    for (let row = 0; row < numRows - 2; row++) {
       for (let col = 0; col < numCols - 3; col++) {
         if (
             // Check diagonal from bottom-left to top-right
@@ -166,6 +232,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return false
       }
 
+
+
+  ///--- RESETTING THE GAME ---///
+  const resetGame = () => {
+
+  }
 
 
 })
