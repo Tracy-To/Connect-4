@@ -152,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       playerTurnElement.textContent = "It's a Tie!"
       playerTurnElement.style.color = 'orange'
       console.log('orange')
+      // show "Play Again" button
       document.getElementById('button').style.display = 'block'
     } else {
       switchPlayer()
@@ -252,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ///--- RESETTING THE GAME ---///
 
-  // enable the button to be clicked to restart the game
+  // enable the button to be clicked to restart the game (only appears after a player wins or there is a tie)
   const button = document.getElementById('button')
   button.addEventListener('click', () => resetGame())
 
