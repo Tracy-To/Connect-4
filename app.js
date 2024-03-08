@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateBoard = () => {
     for (let row = 0; row < numRows; row++) {
       for (let col = 0; col < numCols; col++) {
-        const tile = document.querySelector(`[data-row="${row}"][data-col="${col}"]`) // based on line 70 and 71
+        const tile = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`) // based on line 70 and 71
 
         // update the tiles with the player colors (red or yellow)
         if (board[row][col] === playerRed) { // to be figured out line 137
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ///--- PLAYER MOVE & GAME HANDLING ---///
 
-  const processTileClick = (row, col) => {
+  const processTileClick = (row, col) => { // added event listener in line 74
 
     console.log(`Row: ${row}, Col: ${col}`)
       
@@ -163,20 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ///--- WINNING PLAYER (AND TIE) INFO ---///
 
-  // check for a tie
-  const checkForTie = () => {
-    // go through all the rows and columns
-    for (let row = 0; row < numRows; row++) {
-      for (let col = 0; col < numCols; col++) {
-        // if any tiles are empty, then it's not a tie
-        if (board[row][col] === null) {
-          return false
-        }
-      }
-    }
-    return true
-  }
-
   // check for a winner and how
   const checkForWinner = () => {
       if (checkForHorizontalWin() || checkForVerticalWin() || checkForDiagonalWinBLTR() || checkForDiagonalWinTLBR()) {
@@ -204,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // check for a vertical win
   const checkForVerticalWin = () => {
     for (let col = 0; col < numCols; col++) {
-      for (let row = 0; row < numRows - 2; row++) {
+      for (let row = 0; row < numRows - 3; row++) {
         if (
             board[row][col] === currentPlayer &&
             board[row + 1][col] === currentPlayer &&
@@ -249,6 +235,19 @@ document.addEventListener('DOMContentLoaded', () => {
       return false
     }
     
+  // check for a tie
+  const checkForTie = () => {
+    // go through all the rows and columns
+    for (let row = 0; row < numRows; row++) {
+      for (let col = 0; col < numCols; col++) {
+        // if any tiles are empty, then it's not a tie
+        if (board[row][col] === null) {
+          return false
+        }
+      }
+    }
+    return true
+  }
 
 
   ///--- RESETTING THE GAME ---///
