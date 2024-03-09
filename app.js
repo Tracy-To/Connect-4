@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const players = ["Player Red", "Player Yellow"]
   let currentPlayer = players[Math.floor(Math.random() * players.length)]
   
-  // display whose turn it is
+  // display whose turn it is for the first turn --> used later in a repeating function
   const playerTurnElement = document.getElementById('playerTurn')
   playerTurnElement.textContent = `${currentPlayer}'s Turn`
 
@@ -25,24 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // change the color for the first turn
+  // change the color for the first turn --> used later in a repeating function
   updatePlayerColor()
-
-  // allow players to take take turns
-  const switchPlayer = () => {
-
-    if (currentPlayer === playerRed) {
-      currentPlayer = playerYellow
-    } else if (currentPlayer === playerYellow) {
-      currentPlayer = playerRed
-    }
-    // update turn message on screen
-    playerTurnElement.textContent = `${currentPlayer}'s Turn`
-
-    // change the color of the turn message
-    updatePlayerColor()
-
-  }
 
 
 
@@ -71,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tile.dataset.col = col
 
       // allow each tile to be clicked and then process it
-      tile.addEventListener('click', () => processTileClick(row, col))
+      tile.addEventListener('click', () => processTileClick(row, col)) // to be used in line 123
 
     }
   }
@@ -100,11 +84,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // create empty board
     let board = createEmptyBoard()
 
+
+
+  ///--- PLAYER MOVE & GAME HANDLING ---///
+
   // allow the board to visually update itself after each turn
   const updateBoard = () => {
     for (let row = 0; row < numRows; row++) {
       for (let col = 0; col < numCols; col++) {
-        const tile = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`) // based on line 70 and 71
+        const tile = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`) // based on line 54 and 55
 
         // update the tiles with the player colors (red or yellow)
         if (board[row][col] === playerRed) { // to be figured out line 137
@@ -116,11 +104,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // allow players to take take turns
+  const switchPlayer = () => {
 
+  if (currentPlayer === playerRed) {
+      currentPlayer = playerYellow
+    } else if (currentPlayer === playerYellow) {
+      currentPlayer = playerRed
+    }
+    // update turn message on screen
+    playerTurnElement.textContent = `${currentPlayer}'s Turn`
+  
+    // change the color of the turn message
+    updatePlayerColor()
+  
+  }
 
-  ///--- PLAYER MOVE & GAME HANDLING ---///
-
-  const processTileClick = (row, col) => { // added event listener in line 74
+  const processTileClick = (row, col) => { // added event listener in line 58
 
     console.log(`Row: ${row}, Col: ${col}`)
       
@@ -250,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return true
   }
 
+  
 
   ///--- RESETTING THE GAME ---///
 
@@ -271,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // decide who goes first randomly (again)
     currentPlayer = players[Math.floor(Math.random() * players.length)]
 
-    // create a new board
+    // create a new board where each tile has a null value
     board = createEmptyBoard()
 
     // enable players to switch turns again
@@ -284,3 +285,5 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
 })
+
+
