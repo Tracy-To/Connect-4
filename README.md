@@ -4,7 +4,8 @@ Connect 4 is a two-player, strategy game in which players choose a color, red or
 I made this game because I enjoy strategy games and Connect 4 is one of my favorite games to play.
 
 ## Wireframes
-Please find my original wireframe for this game below. 
+Please find my original wireframe for this game below.
+
 [Connect 4 - Wireframe.pdf](https://github.com/Tracy-To/Connect-4/files/14544698/Connect.4.-.Wireframe.pdf)
 
 ## User Stories
