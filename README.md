@@ -3,6 +3,8 @@ Connect 4 is a two-player, strategy game in which players choose a color, red or
 
 I made this game because I enjoy strategy games and Connect 4 is one of my favorite games to play.
 
+https://fungamesconnect4.netlify.app
+
 ## Wireframes
 Please find my original wireframe for this game below.
 
