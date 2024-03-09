@@ -26,3 +26,4 @@ I decided to make this game similar to the Connect 4 board game that I grew up p
 
 ## Forthcoming Features
 I would like to integrate a modal where one player can choose to play against the computer (perhaps on various difficulty levels) and an option for players to change their coin color (and as a result the in-game player text).
+
