@@ -9,14 +9,14 @@ Please find my original wireframe for this game below.
 [Connect 4 - Wireframe.pdf](https://github.com/Tracy-To/Connect-4/files/14544698/Connect.4.-.Wireframe.pdf)
 
 ## User Stories
-As a player, I want to play with another person.
-As a player, I want to choose a color, red or yellow, so we can distinguish ourselves.
-As a player, I want the game to decide who will go first.
-As the first player, I want to drop my coin first.
-As the second player, I want to drop my coin next.
-As a player, I want us to take turns dropping coins until someone gets four-in-a-row or until there is no more space on the grid.
-As a player, I want the first person to get four-in-a-row to be the winner! If not, the game should end in a tie.
-As a player, I want to be able to play again.
+- As a player, I want to play with another person.
+- As a player, I want to choose a color, red or yellow, so we can distinguish ourselves.
+- As a player, I want the game to decide who will go first.
+- As the first player, I want to drop my coin first.
+- As the second player, I want to drop my coin next.
+- As a player, I want us to take turns dropping coins until someone gets four-in-a-row or until there is no more space on the grid.
+- As a player, I want the first person to get four-in-a-row to be the winner! If not, the game should end in a tie.
+- As a player, I want to be able to play again.
 
 ## Technologies Used
 HTML, CSS, JavaScript, Visual Studio Code
