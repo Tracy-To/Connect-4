@@ -3,6 +3,7 @@ Connect 4 is a two-player, strategy game in which players choose a color, red or
 
 I made this game because I enjoy strategy games and Connect 4 is one of my favorite games to play.
 
+The game is hosted on Netlify:
 https://fungamesconnect4.netlify.app
 
 ## Wireframes
@@ -21,7 +22,7 @@ Please find my original wireframe for this game below.
 - As a player, I want to be able to play again.
 
 ## Technologies Used
-HTML, CSS, JavaScript, Visual Studio Code
+HTML, CSS, JavaScript, Visual Studio Code, Netlify
 
 ## Approaches Taken
 I decided to make this game similar to the Connect 4 board game that I grew up playing in elementary and middle school, so it's quite simple but very user-friendly and easy to dive right into. 
