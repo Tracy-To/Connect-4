@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // prepare an "empty" board players can drop their chips/coins in
+  // prepare an "empty" board players can drop their coins in
   const createEmptyBoard = () => {
 
     // create an empty array as the board
