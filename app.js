@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // add the player's move to the board
     updateBoard()
       
-    // check for a winner
+    // check for a winner or tie (refer to section starting on line 161)
     if (checkForWinner()) {
       playerTurnElement.textContent = `${currentPlayer} Wins!`
       document.getElementById('button').style.display = 'block'
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // create a new board where each tile has a null value
     board = createEmptyBoard()
 
-    // decide who goes first randomly (again)
+    // choose who goes first randomly (again)
     currentPlayer = players[Math.floor(Math.random() * players.length)]
 
     // set up the new turn message and update the color
