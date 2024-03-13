@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (board[lowestRow][col] === playerRed || board[lowestRow][col] === playerYellow) {
       // do nothing
       return
-    } else if (lowestRow <=5) {
+    } else if (lowestRow <= 5) {
       // update the board based on the player's move
       board[lowestRow][col] = currentPlayer
     } else {
@@ -149,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (checkForTie()) {
       playerTurnElement.textContent = "It's a Tie!"
       playerTurnElement.style.color = 'orange'
-      console.log('orange')
       document.getElementById('button').style.display = 'block'
     } else {
       switchPlayer()
@@ -265,13 +264,13 @@ document.addEventListener('DOMContentLoaded', () => {
         tile.style.background = 'white'
       }
 
-    // decide who goes first randomly (again)
-    currentPlayer = players[Math.floor(Math.random() * players.length)]
-
     // create a new board where each tile has a null value
     board = createEmptyBoard()
 
-    // enable players to switch turns again
+    // decide who goes first randomly (again)
+    currentPlayer = players[Math.floor(Math.random() * players.length)]
+
+    // set up the new turn message and update the color
     switchPlayer()
 
     // processTileClick() still active
