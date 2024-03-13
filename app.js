@@ -10,22 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const players = ["Player Red", "Player Yellow"]
   let currentPlayer = players[Math.floor(Math.random() * players.length)]
   
-  // display whose turn it is for the first turn --> used later in a repeating function
+  // display whose turn it is for the first turn --> used later in line 113
   const playerTurnElement = document.getElementById('playerTurn')
   playerTurnElement.textContent = `${currentPlayer}'s Turn`
 
-  // change color of the the turn message based on the current player
+  // change the color of the turn message based on the current player
   const updatePlayerColor = () => {
     if (currentPlayer === playerRed) {
       playerTurnElement.style.color = 'red'
-      // console.log('red')
     } else if (currentPlayer === playerYellow) {
       playerTurnElement.style.color = 'yellow'
-      // console.log('yellow')
     }
   }
 
-  // change the color for the first turn --> used later in a repeating function
+  // change the color for the first turn --> used later in line 116
   updatePlayerColor()
 
 
@@ -50,12 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // allow tiles to be styled in CSS
       tile.className = 'tile'
 
-      // give each tile a row and column index/dataset
+      // give each tile a row and column index (to be used in line 93)
       tile.dataset.row = row
       tile.dataset.col = col
 
-      // allow each tile to be clicked and then process it
-      tile.addEventListener('click', () => processTileClick(row, col)) // to be used in line 123
+      // allow each tile to be clicked and then prepare it for a function
+      tile.addEventListener('click', () => processTileClick(row, col)) // to be used in line 119
 
     }
   }
@@ -67,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const board = []
 
     for (let row = 0; row < numRows; row++) {
-      // create an empty array for each row
+      // create an empty array for a row
       const rowArray = []
 
       for (let col = 0; col < numCols; col++) {
-        // fill each column in the row with a 'null' value 
+        // fill each column in the row with a null value 
         rowArray.push(null)
       }
 
@@ -88,14 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ///--- PLAYER MOVE & GAME HANDLING ---///
 
-  // allow the board to visually update itself after each turn
+  // allow the board to visually update itself after each turn (to be used in line 143)
   const updateBoard = () => {
     for (let row = 0; row < numRows; row++) {
       for (let col = 0; col < numCols; col++) {
-        const tile = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`) // based on line 54 and 55
+        const tile = document.querySelector(`.tile[data-row="${row}"][data-col="${col}"]`) // based on line 52 and 53
 
-        // update the tiles with the player colors (red or yellow)
-        if (board[row][col] === playerRed) { // to be figured out line 137
+        // update the tile with the player color
+        if (board[row][col] === playerRed) {
           tile.style.backgroundColor = 'red'
         } else if (board[row][col] === playerYellow) {
           tile.style.backgroundColor = 'yellow'
@@ -104,23 +102,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // allow players to take take turns
+  // allow players to take turns (to be used in line 155)
   const switchPlayer = () => {
-
-  if (currentPlayer === playerRed) {
-      currentPlayer = playerYellow
-    } else if (currentPlayer === playerYellow) {
-      currentPlayer = playerRed
-    }
-    // update turn message on screen
-    playerTurnElement.textContent = `${currentPlayer}'s Turn`
-  
-    // change the color of the turn message
-    updatePlayerColor()
-  
+    if (currentPlayer === playerRed) {
+        currentPlayer = playerYellow
+      } else if (currentPlayer === playerYellow) {
+        currentPlayer = playerRed
+      }
+      // update the turn message on the screen (originally used in line 15)
+      playerTurnElement.textContent = `${currentPlayer}'s Turn`
+      
+      // change the color of the turn message (originally used in line 27)
+      updatePlayerColor()
   }
 
-  const processTileClick = (row, col) => { // added event listener in line 58
+  const processTileClick = (row, col) => { // added event listener in line 56
 
     console.log(`Row: ${row}, Col: ${col}`)
       
@@ -130,15 +126,18 @@ document.addEventListener('DOMContentLoaded', () => {
     while (lowestRow < 5 && board[lowestRow][col] != null) {
       lowestRow++
     }
-      
-    // check if there is a tile space(s) available in the column
-    if (lowestRow <= 5) {
-    // updated the board based on the player's move
-      board[lowestRow][col] = currentPlayer // tile will change color in line 110
-      } else {
-        // do nothing
-        return
-      }
+    
+    // prevent players from reusing the top row
+    if (board[lowestRow][col] === playerRed || board[lowestRow][col] === playerYellow) {
+      // do nothing
+      return
+    } else if (lowestRow <=5) {
+      // update the board based on the player's move
+      board[lowestRow][col] = currentPlayer
+    } else {
+      // do nothing
+      return
+    }
       
     // add the player's move to the board
     updateBoard()
@@ -146,13 +145,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // check for a winner
     if (checkForWinner()) {
       playerTurnElement.textContent = `${currentPlayer} Wins!`
-      // show "Play Again" button
       document.getElementById('button').style.display = 'block'
     } else if (checkForTie()) {
       playerTurnElement.textContent = "It's a Tie!"
       playerTurnElement.style.color = 'orange'
       console.log('orange')
-      // show "Play Again" button
       document.getElementById('button').style.display = 'block'
     } else {
       switchPlayer()
@@ -238,7 +235,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
   // check for a tie
   const checkForTie = () => {
-    // go through all the rows and columns
     for (let row = 0; row < numRows; row++) {
       for (let col = 0; col < numCols; col++) {
         // if any tiles are empty, then it's not a tie
